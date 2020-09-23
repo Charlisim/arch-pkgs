@@ -1,0 +1,45 @@
+# Maintainer: Michael Daffin <michael@daffin.io>
+pkgname=charlisim-base
+pkgver=1
+pkgrel=1
+pkgdesc="System config for charlisim systems"
+arch=(any)
+url="https://github.com/charlisim/arch-repo"
+license=(MIT)
+groups=(charlisim)
+
+provides=(vim vi)
+conflicts=(vim vi)
+replaces=(vim vi)
+install=charlisim-base.install
+
+# Base packages
+depends=(base linux linux-firmware man-db man-pages texinfo intel-ucode)
+
+# Extra general packages
+depends+=(
+    sudo ripgrep exa fd wget fzf unzip zip dialog pacman-contrib bat ncdu
+    keybase efibootmgr pv
+)
+
+# Debugging tools
+depends+=(
+    lsof bind-tools mtr socat htop iotop openbsd-netcat strace tcpdump whois
+    iftop dstat
+)
+
+# Shells
+depends+=(zsh grml-zsh-config)
+
+# Editor
+depends+=(vim)
+
+# Networking
+depends+=(nftables iw iwd avahi nss-mdns openssh)
+
+rootdir=$PWD
+
+package() {
+    cp -a "$rootdir/files/"* "$pkgdir"
+    chmod -R 0750 "$pkgdir/etc/sudoers.d"
+}
